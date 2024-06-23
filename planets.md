@@ -1,6 +1,6 @@
 # MongoDB - sample_guides.planets
 
-## Practice with the following queries
+## Queries
 
 1. Planets' names starting from the closest to the Sun to the farthest.
 
