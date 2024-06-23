@@ -76,35 +76,49 @@
    or with an aggregation pipeline:
 
    ```mongodb
-
+    db.planets.aggregate(
+        [
+            { $match: { 'surfaceTemperatureC.mean':{$gt:-100} } },
+            { $group: {_id:null, counter:{$sum: 1 } } }
+        ]
+    )
    ```
 
 8. Number of planets and average surface temperature per planetary group (pgroup).
 
    ```mongodb
-
+   db.planets.aggregate([{$group:{_id:'$pgroup', plithos:{$sum:1},
+   avgtemp:{$avg:'$surfaceTemperatureC.mean'}}}])
    ```
 
 9. Number of planets per group that are ranked after the 3rd position from the Sun, sorted in descending order by count.
 
    ```mongodb
-
+   db.planets.aggregate([{$match:{orderFromSun:{$gt:3}}}, {$group:
+   {_id:'$pgroup', plithos:{$sum:1}}}, {$sort:{plithos:-1}}])
    ```
 
 10. Count and list of planets for each element in the atmosphere.
 
     ```mongodb
+    db.planets.aggregate([ { $unwind: "$mainAtmosphere" }, { $group: { _id:"$mainAtmosphere", count: { $sum: 1 }, planets: {$addToSet: '$name' } } } ])
+    ```
 
+    ```mongodb
+    db.planets.aggregate([{$unwind:{path: '$mainAtmosphere'}}, {$group:{_id:'$mainAtmosphere', plithos:{$sum:1},planets:{$addToSet:'$name'}}}])
     ```
 
 11. Count and list of planets with average surface temperature of at least 14 degrees for each element in the atmosphere present in at least two planets.
 
     ```mongodb
-
+    db.planets.aggregate([{$match:{'surfaceTemperatureC.mean':{$lte:14}}},
+    {$unwind:{path:'$mainAtmosphere'}},{$group:{_id:'$mainAtmosphere',
+    plithos:{$sum:1}, planets:{$addToSet:'$name'}}}, {$match:{plithos:
+    {$gte:2}}}])
     ```
 
 12. Number of planets per atmosphere element and planetary group.
 
     ```mongodb
-
+    db.planets.aggregate([{$group:{_id: {'atmo':'$mainAtmosphere', 'pgr':'$pgroup'}, plithos:{$sum:1}, planets:{$addToSet:'$name'}}}])
     ```

@@ -217,7 +217,12 @@ Similar to a `find` query.
 
 ## $group
 
+<p align = "justify">
 Groups documents by a specified key/identifier-expression and apply the accumulator expressions to each group.
+The id field is required when performing a grouping operation. You can set it as a specific property of the document
+e.g if there is a property named group inside the documents, or set it to null and provide a second grouping pattern to
+be implemented from $group.
+</p>
 
 ```javascript
 { $group: { _id: "$field", total: { $sum: "$amount" } } }
