@@ -182,3 +182,116 @@ db.collection.countDocuments( { <query> } );
     <td>{ $text: { $search: "searchString" } }</td>
   </tr>
 </table>
+
+<br>
+<br>
+
+# MongoDB Aggregation Pipeline
+
+The MongoDB aggregation framework is a powerful tool for performing complex data processing and transformation operations on collections. It uses a pipeline approach, where documents are passed through a series of stages, each performing a specific operation on the data.
+
+## Basic Structure
+
+```javascript
+db.collection.aggregate([
+    { <stage1>: { <stage-specific-operator>: <arguments> } },
+    { <stage2>: { <stage-specific-operator>: <arguments> } },
+    ...
+])
+```
+
+## $match
+
+Filters documents to pass only those that match the specified condition(s).
+Similar to a find query.
+
+```javascript
+{
+  $match: {
+    status: "active";
+  }
+}
+```
+
+## $group
+
+Groups documents by a specified key and can perform aggregations on the grouped data.
+
+```javascript
+{ $group: { _id: "$field", total: { $sum: "$amount" } } }
+```
+
+## $project
+
+Reshapes each document in the stream, such as by adding, removing, or renaming fields.
+
+```javascript
+{ $project: { name: 1, total: 1, status: 1 } }
+```
+
+## $sort
+
+Sorts the documents based on the specified fields.
+
+```javascript
+{
+  $sort: {
+    total: -1;
+  }
+}
+```
+
+## $limit
+
+Limits the number of documents passed to the next stage.
+
+```javascript
+{
+  $limit: 5;
+}
+```
+
+## $skip
+
+Skips a specified number of documents before passing the remaining documents to the next stage.
+
+```javascript
+{
+  $skip: 10;
+}
+```
+
+## $unwind
+
+Deconstructs an array field from the input documents to output a document for each element.
+
+```javascript
+{
+  $unwind: "$items";
+}
+```
+
+## $lookup
+
+Performs a left outer join to another collection in the same database.
+
+```javascript
+{
+    $lookup: {
+        from: "otherCollection",
+        localField: "localField",
+        foreignField: "foreignField",
+        as: "newField"
+    }
+}
+```
+
+## $out
+
+Writes the resulting documents of the aggregation pipeline to a specified collection.
+
+```javascript
+{
+  $out: "newCollection";
+}
+```
