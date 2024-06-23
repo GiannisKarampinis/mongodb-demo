@@ -67,20 +67,7 @@ db.collection.find(
 </table>
 
 <h2>MongoDB Query Operators</h2>
-<style>
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  th, td {
-    border: 1px solid black;
-    padding: 8px;
-    text-align: left;
-  }
-  th {
-    background-color: #022022;
-  }
-</style>
+
 <table>
   <tr>
     <th>Operator</th>
