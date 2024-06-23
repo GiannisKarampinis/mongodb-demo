@@ -23,6 +23,8 @@ db.collection.find(
 ).explain(
    <verbosityMode>
 )
+
+db.collection.countDocuments( { <query> } );
 ```
 
 ## Components
