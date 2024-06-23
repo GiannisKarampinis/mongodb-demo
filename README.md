@@ -188,7 +188,9 @@ db.collection.countDocuments( { <query> } );
 
 # MongoDB Aggregation Pipeline
 
-The MongoDB aggregation framework is a powerful tool for performing complex data processing and transformation operations on collections. It uses a pipeline approach, where documents are passed through a series of stages, each performing a specific operation on the data.
+<p align = "justify">
+The MongoDB aggregation framework is a powerful tool for performing complex data processing and transformation operations on collections. It uses a pipeline approach, where documents are passed through a series of stages, each performing a specific operation on the data. The aggregation pipeline is a sequence of stages that process documents. Each stage transforms the documents as they pass through the pipeline. The stages can filter, sort, group, reshape, and modify documents.
+</p>
 
 ## Basic Structure
 
@@ -202,8 +204,8 @@ db.collection.aggregate([
 
 ## $match
 
-Filters documents to pass only those that match the specified condition(s).
-Similar to a find query.
+Preliminary filtering of documents with the aim to pass only those that match the specified condition(s).
+Similar to a `find` query.
 
 ```javascript
 {
@@ -215,7 +217,7 @@ Similar to a find query.
 
 ## $group
 
-Groups documents by a specified key and can perform aggregations on the grouped data.
+Groups documents by a specified key/identifier-expression and apply the accumulator expressions to each group.
 
 ```javascript
 { $group: { _id: "$field", total: { $sum: "$amount" } } }
@@ -223,7 +225,7 @@ Groups documents by a specified key and can perform aggregations on the grouped 
 
 ## $project
 
-Reshapes each document in the stream, such as by adding, removing, or renaming fields.
+Reshapes each document in the stream, such as by adding, removing, or renaming fields. Works like the 2nd {} inside a `find` query.
 
 ```javascript
 { $project: { name: 1, total: 1, status: 1 } }
@@ -295,3 +297,59 @@ Writes the resulting documents of the aggregation pipeline to a specified collec
   $out: "newCollection";
 }
 ```
+
+<!-- Aggregation Operators -->
+<h2>Aggregation Operators</h2>
+
+<!-- Accumulator Operators (used in $group and other stages) -->
+<h3>Accumulator Operators</h3>
+<ul>
+    <li><strong>$sum:</strong> Returns the sum of numeric values.</li>
+    <li><strong>$avg:</strong> Returns the average of numeric values.</li>
+    <li><strong>$min:</strong> Returns the minimum value.</li>
+    <li><strong>$max:</strong> Returns the maximum value.</li>
+    <li><strong>$first:</strong> Returns the first value.</li>
+    <li><strong>$last:</strong> Returns the last value.</li>
+    <li><strong>$push:</strong> Returns an array of values.</li>
+    <li><strong>$addToSet:</strong> Returns an array of unique values.</li>
+</ul>
+
+<!-- Array Operators -->
+<h3>Array Operators</h3>
+<ul>
+    <li><strong>$arrayElemAt:</strong> Returns the element at the specified array index.</li>
+    <li><strong>$concatArrays:</strong> Concatenates arrays to return a new array.</li>
+    <li><strong>$filter:</strong> Selects a subset of the array to return based on the specified condition.</li>
+    <li><strong>$size:</strong> Returns the number of elements in an array.</li>
+    <li><strong>$slice:</strong> Returns a subset of an array.</li>
+</ul>
+
+<!-- Conditional Operators -->
+<h3>Conditional Operators</h3>
+<ul>
+    <li><strong>$cond:</strong> Evaluates a boolean expression to return one of two specified values.</li>
+    <li><strong>$ifNull:</strong> Evaluates an expression and returns the value if not null, otherwise returns a specified value.</li>
+    <li><strong>$switch:</strong> Evaluates a series of case expressions and returns the first value for which a condition is true.</li>
+</ul>
+
+<!-- Date Operators -->
+<h3>Date Operators</h3>
+<ul>
+    <li><strong>$dateToString:</strong> Converts a date object to a string.</li>
+    <li><strong>$year, $month, $dayOfMonth, $hour, $minute, $second, $millisecond:</strong> Extracts parts of a date.</li>
+</ul>
+
+<!-- String Operators -->
+<h3>String Operators</h3>
+<ul>
+    <li><strong>$concat:</strong> Concatenates strings.</li>
+    <li><strong>$substr:</strong> Returns a substring of a string.</li>
+    <li><strong>$toLower:</strong> Converts a string to lowercase.</li>
+    <li><strong>$toUpper:</strong> Converts a string to uppercase.</li>
+</ul>
+
+<!-- Type Conversion Operators -->
+<h3>Type Conversion Operators</h3>
+<ul>
+    <li><strong>$toInt, $toString, $toBool, $toDouble:</strong> Converts a value to the specified type.</li>
+</ul>
